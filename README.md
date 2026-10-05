@@ -1,22 +1,22 @@
-# 🏋️‍♂️ nexaFit — AI-Powered Nutrition & Lifestyle Platform
+# 🏋️‍♂️ AI-Powered Nutrition & Calorie Tracker Platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/Frontend-React_18-61DAFB.svg)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Build-Vite-646CFF.svg)](https://vitejs.dev/)
 
-**nexaFit** is a complete, modern health, nutrition, and workout tracking application powered by Machine Learning and AI. It features an **AI Fitness Chatbot (`nexaBot`)** with categorized generic question suggestions, a **Post-Workout Calorie Predictor** built with XGBoost, an **AI Meal Planner** powered by Spoonacular, a **Community Forum**, and full **User Profile** management.
+A complete, modern health, nutrition, and workout tracking application powered by Machine Learning and AI. It features an **AI Fitness Chatbot** with categorized generic question suggestions, a **Post-Workout Calorie Predictor** built with XGBoost, an **AI Meal Planner** powered by Spoonacular, a **Community Forum**, and full **User Profile** management.
 
 ---
 
 ## 🔥 Features
 
-### 🤖 1. nexaBot — AI Fitness & Nutrition Chatbot
+### 🤖 1. AI Fitness & Nutrition Chatbot
 - **Categorized Generic Question Chips**: Click-to-ask suggestions across:
   - 🏋️ **Workouts & Calories**: HIIT burn estimates, accuracy info, workout splits, cardio vs lifting order.
   - 🥗 **Nutrition & Meal Planning**: High-protein vegetarian meals, macro calculations, gluten/lactose dietary customization.
   - 💧 **Hydration & Recovery**: Daily fluid guidelines, pre/post workout meals, sleep & HGH recovery.
-  - ⚙️ **nexaFit Platform Help**: Profile management, community forum, and security.
+  - ⚙️ **Platform Help**: Profile management, community forum, and security.
 - **Dual AI Engine**: Seamless integration with **Gemini AI API** when configured, with fallback to an intelligent domain knowledge engine.
 - **Interactive Floating UI**: Glassmorphic card design, typing animation, markdown support, timestamping, and follow-up suggestion chips.
 
@@ -58,7 +58,7 @@
 ## 📁 Repository Structure
 
 ```plaintext
-nexaFit/
+CALORIE-TRACKER/
 ├── backend/
 │   ├── main.py                # FastAPI entry point & API route router
 │   ├── chatbot.py             # AI Chatbot router & generic question engine
@@ -120,7 +120,7 @@ cd CALORIE-TRACKER
 3. Configure Environment Variables (optional `.env` file in `backend/`):
    ```env
    MONGODB_URI=mongodb://localhost:27017
-   DATABASE_NAME=nexafit
+   DATABASE_NAME=calorie_tracker
    SPOONACULAR_API_KEY=your_spoonacular_key
    GEMINI_API_KEY=your_gemini_key
    ```
@@ -157,7 +157,7 @@ cd CALORIE-TRACKER
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `POST` | `/chatbot/query` | Query nexaBot AI assistant for answers & suggestions |
+| `POST` | `/chatbot/query` | Query AI assistant for answers & suggestions |
 | `GET` | `/chatbot/generic-questions` | Fetch categorized generic question chips |
 | `POST` | `/predict-calories` | Predict workout burnt calories via ML model |
 | `POST` | `/meal-plan` | Generate weekly meal plans filtered by diet & limit |
