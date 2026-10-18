@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { useUserProfile } from '../../context/UserProfileContext';
+import { useUserProfile } from '../../context/UserProfileContextCal';
 
 const ProfileDataDisplayCal: React.FC = () => {
-  const { userProfile, profileError, profileExists } = useUserProfile();
+  const { userProfile, profileError } = useUserProfile();
 
   if (profileError) {
     return (
@@ -18,7 +18,7 @@ const ProfileDataDisplayCal: React.FC = () => {
     );
   }
 
-  if (!userProfile || !profileExists) return null;
+  if (!userProfile) return null;
 
   return (
     <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded mb-4">

@@ -8,10 +8,15 @@ load_dotenv()
 
 class DatabaseManager:
     def __init__(self):
-        mongo_uri = os.getenv('MONGODB_URI', 'mongodb://localhost:27017')
-        db_name = os.getenv('DATABASE_NAME', 'nexafit')
-        self.client = AsyncIOMotorClient(mongo_uri)
-        self.db = self.client[db_name]
+        uri = os.getenv('MONGODB_URI')
+        if uri:
+            self.client = AsyncIOMotorClient(uri)
+        else:
+            # shortcut: in-memory DB when MONGODB_URI is unset, data is lost on restart; set MONGODB_URI to persist
+            from mongomock_motor import AsyncMongoMockClient
+            print("MONGODB_URI not set - using in-memory database")
+            self.client = AsyncMongoMockClient()
+        self.db = self.client[os.getenv('DATABASE_NAME') or 'nexafit']
         
         # Collections
         self.calorie_predictions = self.db.calorie_predictions

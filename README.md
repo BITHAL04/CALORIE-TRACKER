@@ -1,171 +1,278 @@
-# 🏋️‍♂️ AI-Powered Nutrition & Calorie Tracker Platform
+# nexaFit Monorepo
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg)](https://fastapi.tiangolo.com/)
-[![React](https://img.shields.io/badge/Frontend-React_18-61DAFB.svg)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Build-Vite-646CFF.svg)](https://vitejs.dev/)
-
-A complete, modern health, nutrition, and workout tracking application powered by Machine Learning and AI. It features an **AI Fitness Chatbot** with categorized generic question suggestions, a **Post-Workout Calorie Predictor** built with XGBoost, an **AI Meal Planner** powered by Spoonacular, a **Community Forum**, and full **User Profile** management.
+Welcome to the **nexaFit Monorepo**, a unified repository for both the backend and frontend components of the nexaFit platform. nexaFit is a comprehensive nutrition and wellness platform that offers calorie prediction, meal planning, community forums, and now an **LLM-powered chatbot assistant** to guide users in utilizing the platform effectively.
 
 ---
 
-## 🔥 Features
+## Features
 
-### 🤖 1. AI Fitness & Nutrition Chatbot
-- **Categorized Generic Question Chips**: Click-to-ask suggestions across:
-  - 🏋️ **Workouts & Calories**: HIIT burn estimates, accuracy info, workout splits, cardio vs lifting order.
-  - 🥗 **Nutrition & Meal Planning**: High-protein vegetarian meals, macro calculations, gluten/lactose dietary customization.
-  - 💧 **Hydration & Recovery**: Daily fluid guidelines, pre/post workout meals, sleep & HGH recovery.
-  - ⚙️ **Platform Help**: Profile management, community forum, and security.
-- **Dual AI Engine**: Seamless integration with **Gemini AI API** when configured, with fallback to an intelligent domain knowledge engine.
-- **Interactive Floating UI**: Glassmorphic card design, typing animation, markdown support, timestamping, and follow-up suggestion chips.
+### Backend Features
 
-### 📊 2. Post-Workout Calorie Predictor
-- Predicts calories burned during workouts with **85–90% accuracy** using a pre-trained **XGBoost Regressor** model.
-- Evaluates key physiological parameters: Heart Rate, Workout Duration, Body Temperature, Age, Gender, Height, and Weight.
-
-### 🍽️ 3. AI Meal Planner
-- Generates customized weekly meal plans tailored to specific calorie limits, diet types (Vegetarian, Vegan, Keto, Paleo, etc.), and food intolerances.
-- Fetches detailed recipe instructions and nutritional breakdowns via Spoonacular API.
-
-### 💬 4. Community Forum
-- Interactive discussion hub to post fitness tips, ask questions, tag topics, and comment on peer posts.
-- Features paginated feeds, tag filtering, and real-time comment counters.
-
-### 👤 5. User Profiles & Authentication
-- Secure user authentication managed by **Clerk**.
-- Customizable user profiles that automatically feed into Calorie Predictions and Meal Planning logic.
+1. **Post-Workout Burnt Calorie Prediction**
+    - Uses a trained **XGBoost model** to predict calories burnt based on user input.
+    - Inputs include gender, age, height, weight, workout duration, heart rate, and body temperature.
+2. **Meal Planning**
+    - Integrates with the **Spoonacular API** to generate weekly meal plans.
+    - Supports dietary preferences, calorie limits, and intolerance filtering.
+3. **Forum**
+    - Allows users to create posts, comment on discussions, and engage with the community.
+    - Features tagging, pagination, and comment tracking for meaningful discussions.
+4. **User Management**
+    - Handles user profile creation, updates, and retrieval.
+5. **Chatbot Assistant**
+    - Powered by an LLM (Large Language Model) to assist users in navigating the platform.
+    - Provides guidance on calorie prediction inputs, meal planning options, forum usage, and more.
 
 ---
 
-## 🛠️ Tech Stack
+### Frontend Features
 
-### **Frontend**
-- **Framework**: React 18 + TypeScript + Vite
-- **Styling**: TailwindCSS, Shadcn UI primitives, Framer Motion
-- **Authentication**: Clerk React SDK
-- **Icons**: Lucide React
+1. **User Dashboard**
+    - Displays daily caloric intake, nutritional data, and suggested meal plans.
+    - Visualizes calorie predictions using charts.
+2. **Authentication**
+    - User registration and login powered by **Clerk**.
+3. **Meal Planning**
+    - Fetches weekly meal plans from the backend.
+4. **Forum**
+    - Enables users to participate in discussions, share motivation, and engage with the community.
+5. **Chatbot Integration**
+    - Frontend interface for interacting with the LLM-powered assistant.
+6. **Responsive Design**
+    - Optimized for mobile and desktop views.
+
+---
+
+## Tech Stack
+
+### Backend
+
+- **Framework**: FastAPI
+- **Database**: MongoDB Atlas
+- **Machine Learning Model**: XGBoost
+- **Containerization**: Docker
+- **LLM Integration**: OpenAI GPT or similar language model
+
+
+### Frontend
+
+- **Framework**: React
+- **Styling**: TailwindCSS
+- **Deployment**: Vercel
 - **HTTP Client**: Axios
-
-### **Backend**
-- **Framework**: FastAPI (Python 3.9+)
-- **ML Engine**: XGBoost Regressor, Scikit-Learn (StandardScaler)
-- **Database**: MongoDB Atlas (Async Motor client)
-- **External APIs**: Gemini AI API, Spoonacular API
+- **Authentication**: Clerk
 
 ---
 
-## 📁 Repository Structure
+## Monorepo Directory Structure
 
 ```plaintext
-CALORIE-TRACKER/
-├── backend/
-│   ├── main.py                # FastAPI entry point & API route router
-│   ├── chatbot.py             # AI Chatbot router & generic question engine
-│   ├── database.py            # MongoDB AsyncIOMotor manager
-│   ├── ml_predictor.py        # XGBoost calorie prediction logic
-│   ├── models.py              # Pydantic data schemas
-│   ├── forum.py               # Community forum endpoints
-│   ├── calorie_predictor.json # Pre-trained XGBoost ML model
-│   ├── std_scaler.bin         # Scaler weights for feature normalization
-│   └── requirements.txt       # Python dependencies
-├── frontend/
+.
+├── backend/                  # Backend directory
+│   ├── .dockerignore         # Files ignored by Docker
+│   ├── .env                  # Environment variables (not included in repo)
+│   ├── .gitignore            # Git ignore rules
+│   ├── Dockerfile            # Docker build instructions
+│   ├── LICENSE               # License file
+│   ├── main.py               # FastAPI entry point
+│   ├── README.Docker.md      # Docker-specific instructions
+│   ├── README.md             # Backend documentation
+│   ├── render.yaml           # Render deployment blueprint file
+│   ├── requirements.txt      # Python dependencies
+│   ├── database/             # Database management files
+│   │   └── database.py       # MongoDB database manager
+│   ├── ml/                   # Machine learning-related files
+│   │   ├── calorie_predictor.json  # Trained XGBoost model
+│   │   ├── ml_predictor.py         # Prediction endpoint handler
+│   │   └── std_scaler.bin          # Fitted StandardScaler for normalization
+│   ├── routes/               # API route handlers
+│   │   ├── calorie_prediction.py  # Calorie prediction routes
+│   │   ├── chat_assistant.py       # Chatbot assistant routes
+│   │   ├── forum.py                # Forum routes
+│   │   ├── meal_planning.py        # Meal planning routes
+│   │   └── user_profile.py         # User profile routes
+│   └── validation/           # Validation models using Pydantic
+│       └── models.py         # Pydantic validation models for API requests/responses
+├── frontend/                 # Frontend directory
+│   ├── public/               # Static assets (e.g., images, favicon)
 │   ├── src/
-│   │   ├── components/
-│   │   │   ├── chatbot/        # AIChatbot component & generic chips UI
-│   │   │   ├── layouts/        # AppLayout, HomeLayout, InfoPageLayout
-│   │   │   ├── calorie-page/   # Calorie tracker forms & results
-│   │   │   ├── meal-planner/   # Meal plan input & recipe cards
-│   │   │   └── forum/          # Forum posts, comments, & modals
-│   │   ├── pages/              # Home, HelpCenter, CaloriePredictor, MealPlanner, Profile, Forum
-│   │   ├── utils/              # chatbotApi.ts, forumApi.ts, mealPlanOptions.ts
-│   │   └── App.tsx             # Main router & Clerk Provider
-│   ├── package.json            # Node.js dependencies
-│   └── vite.config.ts          # Vite build configuration
-├── .gitignore
-├── LICENSE
-└── README.md
+│   │   ├── components/       # Reusable React components
+│   │   ├── pages/            # Page-level components (e.g., Dashboard, Forum)
+│   │   ├── styles/           # TailwindCSS configuration files
+│   │   └── App.js            # Main React application entry point
+│   ├── .env                  # Environment variables (not included in repo)
+│   ├── package.json          # Project metadata and dependencies
+│   └── tailwind.config.js    # TailwindCSS configuration file
+└── README.md                 # Monorepo documentation (this file)
 ```
 
 ---
 
-## 🚀 Localhost Quickstart Guide
+## Installation
 
 ### Prerequisites
-- **Node.js** v18+ and **npm**
-- **Python** 3.9+
+
+- Python 3.9+
+- Node.js (v16+)
+- Docker (optional for containerization)
+- MongoDB Atlas account (for backend database)
+- Spoonacular API key (for meal planning)
+- OpenAI API key or equivalent (for LLM chatbot assistant)
 
 ---
 
-### Step 1: Clone the Repository
+### Quick local run (no API keys needed)
+
+All external services are optional. Without keys: no `MONGODB_URI` → in-memory database (reset on restart), no `SPOONACULAR_API_KEY` → built-in sample recipes, no `VITE_CLERK_PUBLISHABLE_KEY` → local username-only sign-in, no `ANTHROPIC_API_KEY` → the chat assistant answers from 50 built-in diet Q&As (with a key in `backend/.env`, it uses Claude).
+
 ```bash
-git clone https://github.com/BITHAL04/CALORIE-TRACKER.git
-cd CALORIE-TRACKER
+cd backend && python -m venv .venv && .venv/Scripts/pip install -r requirements.txt
+.venv/Scripts/python -m uvicorn main:app --port 8001
+cd frontend && npm install && npm run dev   # frontend/.env: VITE_API_URL=http://127.0.0.1:8001
 ```
 
----
+### Backend Setup
 
-### Step 2: Start the Backend Server
+1. Navigate to the `backend` directory:
 
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-
-2. Install Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Configure Environment Variables (optional `.env` file in `backend/`):
-   ```env
-   MONGODB_URI=mongodb://localhost:27017
-   DATABASE_NAME=calorie_tracker
-   SPOONACULAR_API_KEY=your_spoonacular_key
-   GEMINI_API_KEY=your_gemini_key
-   ```
-
-4. Start the FastAPI development server:
-   ```bash
-   python -m uvicorn main:app --reload --port 8000
-   ```
-   *The backend server will run at:* **`http://localhost:8000`** *(Interactive API Docs at `http://localhost:8000/docs`)*
-
----
-
-### Step 3: Start the Frontend Server
-
-1. Open a new terminal and navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
+```bash
+cd backend/
+```
 
 2. Install dependencies:
-   ```bash
-   npm install
-   ```
 
-3. Start the Vite development server:
-   ```bash
-   npm run dev
-   ```
-   *The frontend application will run at:* **`http://localhost:8080`**
+```bash
+pip install -r requirements.txt
+```
+
+3. Set up environment variables:
+Create a `.env` file in the `backend` directory with the following keys:
+
+```env
+MONGODB_URI=&lt;your_mongodb_uri&gt;
+DATABASE_NAME=&lt;your_database_name&gt;
+SPOONACULAR_API_KEY=&lt;your_spoonacular_api_key&gt;
+CALORIE_MODEL_PATH=ml/calorie_predictor.json
+OPENAI_API_KEY=&lt;your_openai_api_key&gt;
+```
+
+4. Run the application:
+
+```bash
+uvicorn main:app --reload
+```
+
+5. Access the API documentation at `http://127.0.0.1:8000/docs`.
 
 ---
 
-## 📡 Key API Endpoints
+### Frontend Setup
 
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `POST` | `/chatbot/query` | Query AI assistant for answers & suggestions |
-| `GET` | `/chatbot/generic-questions` | Fetch categorized generic question chips |
-| `POST` | `/predict-calories` | Predict workout burnt calories via ML model |
-| `POST` | `/meal-plan` | Generate weekly meal plans filtered by diet & limit |
-| `GET/POST` | `/user/profile` | Manage user profiles |
-| `GET/POST` | `/forum/posts` | Retrieve and create community forum posts |
+1. Navigate to the `frontend` directory:
+
+```bash
+cd frontend/
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Set up environment variables:
+Create a `.env` file in the `frontend` directory with the following keys:
+
+```bash
+REACT_APP_API_URL=&lt;your-backend-api-url&gt;
+REACT_APP_CLERK_FRONTEND_API=&lt;your-clerk-frontend-api-key&gt;
+REACT_APP_OPENAI_API_KEY=&lt;your-openai-api-key&gt;
+```
+
+4. Start the development server:
+
+```bash
+npm run dev
+```
+
+5. Build for production:
+
+```bash
+npm run build
+```
+
+6. Run production build locally:
+
+```bash
+npm start
+```
+
 
 ---
 
-## 📜 License
+## Running with Docker
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+### Backend
+
+1. Navigate to the `backend` directory:
+
+```bash
+cd backend/
+```
+
+2. Build the Docker image:
+
+```bash
+docker build -t nexafit-backend .
+```
+
+3. Run the container:
+
+```bash
+docker run --env-file .env -p 8000:8000 nexafit-backend 
+```
+
+4. Access the API at `http://127.0.0.1:8000`.
+
+---
+
+## Deployment
+
+### Backend Deployment
+
+The backend can be deployed on platforms like Render.com using `render.yaml` or any cloud provider supporting Docker containers.
+
+### Frontend Deployment
+
+The frontend is optimized for deployment on Vercel or Netlify.
+
+To deploy on Vercel:
+
+1. Push changes to your GitHub repository.
+2. Link your repository to Vercel.
+3. Configure environment variables in Vercel settings.
+4. Deploy!
+
+---
+
+## Contributing
+
+We welcome contributions! To contribute:
+
+1. Fork this repository.
+2. Create a new branch (`git checkout -b feature-name`).
+3. Commit your changes (`git commit -m "Add feature"`).
+4. Push to your branch (`git push origin feature-name`).
+5. Open a pull request.
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+## Contact
+
+For questions or support, please contact [ezahpizza](https://github.com/ezahpizza).

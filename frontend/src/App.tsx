@@ -15,16 +15,16 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ContactPage from "./pages/ContactPage";
 import HelpCenter from "./pages/HelpCenter";
 import AboutUs from "./pages/AboutUs";
-import AboutCreator from "./pages/AboutCreator";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import ForumPage from "./pages/ForumPage";
 import PostDetail from "./components/forum-components/PostDetail";
 import EditPostForm from "./components/forum-components/EditPostForm";
 import LoadingScreen from "./components/ui-components/parts/LoadingScreen";
+import ChatWidget from "./components/ChatWidget";
 
-// Make sure to use the env variable and provide a fallback for development
-const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || 'pk_test_Y2xlcmsuYXBwLmRldi1zYWN1by5sY2wtZGVtby0xNDEuMzguMS4xLjkxMTYxLjE';
+// Unset key = local demo auth (see vite.config.ts)
+const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const App = () => {
   const [appLoading, setAppLoading] = useState(true);
@@ -41,7 +41,6 @@ const App = () => {
   return (
     <ClerkProvider 
       publishableKey={CLERK_PUBLISHABLE_KEY}
-      clerkJSVersion="5.56.0-snapshot.v20250312225817"
       appearance={{
         layout: {
           unsafe_disableDevelopmentModeWarnings: true,
@@ -94,11 +93,11 @@ const App = () => {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/help-center" element={<HelpCenter />} />
             <Route path="/about" element={<AboutUs />} />
-            <Route path="/about-creator" element={<AboutCreator />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfUse />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <ChatWidget />
         </AppContextProvider>
       </BrowserRouter>
     </ClerkProvider>

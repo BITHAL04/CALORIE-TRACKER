@@ -3,7 +3,6 @@ import InfoPageLayout from '@/components/layouts/InfoPageLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { Heart, LineChart, Utensils, Users } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const AboutUs = () => {
   const values = [
@@ -149,14 +148,6 @@ const AboutUs = () => {
             nexaFit is brought to you by a passionate team of developers, nutritionists, fitness experts, 
             and data scientists who share a common goal: to help you achieve your health and fitness goals.
           </p>
-          <div className="flex justify-center">
-            <Link 
-              to="/about-creator" 
-              className="inline-block py-2 px-6 bg-nexafit-accent text-white rounded-full hover:bg-nexafit-accent/90 transition-colors"
-            >
-              About the Creator
-            </Link>
-          </div>
         </section>
       </div>
     </InfoPageLayout>

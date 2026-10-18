@@ -77,7 +77,7 @@ const CalorieFormContent: React.FC<CaloriePredictionFormProps> = ({ onSubmit, is
           <div className="pt-2">
             <SubmitButton 
               isLoading={isLoading} 
-              isDisabled={false}
+              isDisabled={!userProfile}
               text="Calculate Calories"
               loadingText="Calculating..."
             />

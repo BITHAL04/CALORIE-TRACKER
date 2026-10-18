@@ -3,18 +3,12 @@ import InfoPageLayout from '@/components/layouts/InfoPageLayout';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { AlertCircle, BookOpen, HelpCircle, Smartphone, MessageCircle, Bot, Sparkles } from 'lucide-react';
+import { AlertCircle, BookOpen, HelpCircle, Smartphone, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const HelpCenter = () => {
   const categories = [
-    {
-      title: "AI Fitness Assistant",
-      icon: <Bot className="h-6 w-6 text-nexafit-navbar" />,
-      description: "Ask nexaBot for immediate answers to nutrition, calories, and workout questions",
-      link: "#ai-chatbot"
-    },
     {
       title: "Getting Started",
       icon: <BookOpen className="h-6 w-6 text-nexafit-navbar" />,
@@ -23,7 +17,7 @@ const HelpCenter = () => {
     },
     {
       title: "Meal Planning",
-      icon: <HelpCircle className="h-6 w-6 text-nexafit-navbar text-emerald-600" />,
+      icon: <HelpCircle className="h-6 w-6 text-nexafit-navbar" />,
       description: "Get help with our meal planning feature and understand how to use it",
       link: "#meal-planning"
     },
@@ -32,6 +26,12 @@ const HelpCenter = () => {
       icon: <AlertCircle className="h-6 w-6 text-nexafit-navbar" />,
       description: "Learn how our calorie prediction system works and how to use it effectively",
       link: "#calorie-tracker"
+    },
+    {
+      title: "Contact Support",
+      icon: <Smartphone className="h-6 w-6 text-nexafit-navbar" />,
+      description: "Get in touch with our support team for personalized assistance",
+      link: "#contact"
     }
   ];
 

@@ -3,7 +3,6 @@ import React, { ReactNode } from 'react';
 import Footer from '../ui-components/Footer';
 import BackgroundElements from '../ui-components/BackgroundElements';
 import Navbar_global from '../ui-components/navbars/Navbar-global';
-import AIChatbot from '../chatbot/AIChatbot';
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -34,8 +33,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({
       </main>
       
       {footer && <Footer />}
-
-      <AIChatbot />
     </div>
   );
 };

@@ -7,9 +7,9 @@ from dotenv import load_dotenv
 
 from models import CaloriePredictionInput, CaloriePredictionResult, MealPlanRequest, MealPlanResult, UserProfile
 from ml_predictor import CaloriePredictor
-from database import DatabaseManager
-from forum import router as forum_router
-from chatbot import router as chatbot_router
+from sample_recipes import sample_meal_plan
+from forum import router as forum_router, db_manager
+from chatbot import router as chat_router
 
 load_dotenv()
 
@@ -26,12 +26,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(forum_router)
-app.include_router(chatbot_router)
+app.include_router(chat_router)
 
-# Initialize ML Predictor and Database
-model_path = os.getenv('CALORIE_MODEL_PATH', os.path.join(os.path.dirname(__file__), 'calorie_predictor.json'))
-ml_predictor = CaloriePredictor(model_path)
-db_manager = DatabaseManager()
+# Initialize ML Predictor (db_manager is shared with the forum router)
+ml_predictor = CaloriePredictor(os.getenv('CALORIE_MODEL_PATH'))
 
 # -------------------------------------------------------------------
 async def generate_meal_plan(diet: str = None, calories: int = None, intolerances: list = None):
@@ -133,25 +131,30 @@ async def create_meal_plan(request: MealPlanRequest, user_id: str):
             if request.intolerances is None and profile.get("intolerances"):
                 request.intolerances = profile.get("intolerances")
         
-        # Generate plan
-        meal_plan = await generate_meal_plan(
-            diet=request.diet_type,
-            calories=request.max_calories,
-            intolerances=request.intolerances
-        )
+        if not os.getenv("SPOONACULAR_API_KEY"):
+            detailed_recipes = sample_meal_plan(request.diet_type, request.intolerances)
+            if not detailed_recipes:
+                raise HTTPException(status_code=404, detail="No meals found. Try relaxing your filters.")
+        else:
+            # Generate plan
+            meal_plan = await generate_meal_plan(
+                diet=request.diet_type,
+                calories=request.max_calories,
+                intolerances=request.intolerances
+            )
 
-        if not meal_plan.get("week"):
-            raise HTTPException(status_code=404, detail="No meals found. Try relaxing your filters.")
+            if not meal_plan.get("week"):
+                raise HTTPException(status_code=404, detail="No meals found. Try relaxing your filters.")
 
-        # Get all recipe IDs
-        recipe_ids = [
-            meal["id"]
-            for day in meal_plan["week"].values()
-            for meal in day.get("meals", [])
-        ]
+            # Get all recipe IDs
+            recipe_ids = [
+                meal["id"]
+                for day in meal_plan["week"].values()
+                for meal in day.get("meals", [])
+            ]
 
-        # Fetch all recipe details in parallel
-        detailed_recipes = await fetch_recipe_details(recipe_ids)
+            # Fetch all recipe details in parallel
+            detailed_recipes = await fetch_recipe_details(recipe_ids)
 
         # Prepare and log
         meal_plan_entry = {
@@ -171,6 +174,8 @@ async def create_meal_plan(request: MealPlanRequest, user_id: str):
         print(f"Spoonacular API Error: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Spoonacular API error: {str(e)}")
 
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
