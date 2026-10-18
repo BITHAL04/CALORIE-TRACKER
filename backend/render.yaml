@@ -1,18 +1,19 @@
-# Exported from Render on 2025-03-31T18:06:13Z
 services:
 - type: web
-  name: nexaFit-backend
+  name: nexafit-backend
   runtime: docker
-  repo: https://github.com/ezahpizza/nexaFit-backend
+  repo: https://github.com/BITHAL04/CALORIE-TRACKER
+  branch: main
+  rootDir: backend
   plan: free
   envVars:
-  - key: CALORIE_MODEL_PATH
-    sync: false
-  - key: DATABASE_NAME
-    sync: false
   - key: MONGODB_URI
     sync: false
+  - key: DATABASE_NAME
+    value: nexafit
   - key: SPOONACULAR_API_KEY
+    sync: false
+  - key: ANTHROPIC_API_KEY
     sync: false
   region: singapore
   dockerContext: .
